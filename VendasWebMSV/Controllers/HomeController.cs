@@ -17,7 +17,8 @@ namespace VendasWebMSV.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Aplicação de Vendas Web ASP Net Core MVC em CSharp.";
+            ViewData["Student"] = "Gabriel Aires de Camargo.";
 
             return View();
         }
