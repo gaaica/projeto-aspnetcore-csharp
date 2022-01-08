@@ -37,7 +37,8 @@ namespace VendasWebMSV
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<VendasWebMSVContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("VendasWebMSVContext")));
+                    options.UseMySql(Configuration.GetConnectionString("VendasWebMSVContext"), 
+                    builder => builder.MigrationsAssembly("VendasWebMSV")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
