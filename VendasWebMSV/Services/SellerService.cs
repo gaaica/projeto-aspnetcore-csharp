@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VendasWebMSV.Models;
 using Microsoft.EntityFrameworkCore;
+using VendasWebMSV.Services.Exceptions;
 
 namespace VendasWebMSV.Services
 {
@@ -38,6 +39,24 @@ namespace VendasWebMSV.Services
             _context.Seller.Remove(obj);
             _context.SaveChanges();
 
+        }
+
+        public void Update(Seller seller)
+        {
+            if (!_context.Seller.Any(x => x.Id == seller.Id))
+            {
+                throw new NotFoundException("Vendedor não encontrado!");
+            }
+            try
+            {
+                _context.Update(seller);
+                _context.SaveChanges();
+
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
         }
     }
 }
