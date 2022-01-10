@@ -23,7 +23,7 @@ namespace VendasWebMSV.Models
         public string Email { get; set; }
 
         [Display(Name = "Data de Nascimento")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Campo da Data de nascimento não pode ser vazio")]
         public DateTime BirthDate { get; set; }
 

@@ -22,7 +22,7 @@ namespace VendasWebMSV.Controllers
             _departmentService = departmentService;
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var list = await _sellerService.FildAllAsync();
             return View(list);
@@ -31,13 +31,13 @@ namespace VendasWebMSV.Controllers
         public async Task<IActionResult> Create()
         {
             var departments = await _departmentService.FindAllAsync();
-            var viewModel = new SellerFormViewModel { Departments = departments};
+            var viewModel = new SellerFormViewModel { Departments = departments };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Create(Seller seller)
+        public async Task<IActionResult> Create(Seller seller)
         {
             if (!ModelState.IsValid)
             {
@@ -49,28 +49,36 @@ namespace VendasWebMSV.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task <IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "Identificador do vendedor não fornecido!"});
+                return RedirectToAction(nameof(Error), new { message = "Identificador do vendedor não fornecido!" });
             }
             var obj = await _sellerService.FindByIdAsync(id.Value);
-            if(obj == null)
+            if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
             }
             return View(obj);
-            
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                await _sellerService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
 
-            await _sellerService.RemoveAsync(id);
-            return RedirectToAction(nameof(Index));
+            }
+            catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Não foi possível excluir este vendedor porque ele tem vendas" });
+            }
+
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -129,7 +137,7 @@ namespace VendasWebMSV.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            
+
         }
 
         public IActionResult Error(string message)
