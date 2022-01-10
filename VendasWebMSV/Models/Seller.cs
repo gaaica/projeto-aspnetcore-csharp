@@ -10,19 +10,32 @@ namespace VendasWebMSV.Models
     {
         [Display(Name = "Código")]
         public int Id { get; set; }
+
         [Display(Name = "Nome")]
+        [Required(ErrorMessage = "Campo do Nome não pode ser vazio")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "Tamanho do nome deve ser entre {2} e {1} caracteres")]
         public string Name { get; set; }
+
         [Display(Name = "E-mail")]
         [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Campo do Email não pode ser vazio")]
+        [EmailAddress(ErrorMessage = "Digite um e-mail válido")]
         public string Email { get; set; }
+
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Campo da Data de nascimento não pode ser vazio")]
         public DateTime BirthDate { get; set; }
+
         [Display(Name = "Salário Base")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
+        [Required(ErrorMessage = "Campo do Salário Base não pode ser vazio")]
+        [Range(100.0, 50000.0, ErrorMessage = "O salário Base deve ser entre {1} e {2}")]
         public double BaseSalary { get; set; }
+
         [Display(Name = "Departamento")]
         public Department Department { get; set; }
+
         public int DepartmentId { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
