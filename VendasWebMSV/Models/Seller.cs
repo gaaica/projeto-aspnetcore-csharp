@@ -23,6 +23,7 @@ namespace VendasWebMSV.Models
         public string Email { get; set; }
 
         [Display(Name = "Data de Nascimento")]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Campo da Data de nascimento não pode ser vazio")]
         public DateTime BirthDate { get; set; }
@@ -30,12 +31,14 @@ namespace VendasWebMSV.Models
         [Display(Name = "Salário Base")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         [Required(ErrorMessage = "Campo do Salário Base não pode ser vazio")]
+
         [Range(100.0, 50000.0, ErrorMessage = "O salário Base deve ser entre {1} e {2}")]
         public double BaseSalary { get; set; }
-
+        [DataType(DataType.Currency)]
         [Display(Name = "Departamento")]
         public Department Department { get; set; }
 
+        [Display(Name = "Departamento")]
         public int DepartmentId { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 

@@ -53,7 +53,7 @@ namespace VendasWebMSV
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
-            var ptBr = new CultureInfo("en-US");
+            var ptBr = new CultureInfo("pt-BR");
             var localizationOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(ptBr),
